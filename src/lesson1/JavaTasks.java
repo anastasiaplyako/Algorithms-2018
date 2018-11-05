@@ -2,6 +2,12 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -31,9 +37,29 @@ public class JavaTasks {
      * 19:56:14
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
+     *  T(n)
+     *  O(n*log(n))
      */
-    static public void sortTimes(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortTimes(String inputName, String outputName) throws IOException {
+        List<String>list = new ArrayList<String>();
+        try {
+            Scanner scanner = new Scanner(new File(inputName));
+            while(scanner.hasNext()){
+                list.add(scanner.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Collections.sort(list);
+        try {
+            FileWriter output = new FileWriter(new File(outputName));
+            for (int i = 0; i < list.size(); i++) {
+                output.write(list.get(i) + "\n");
+            }
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -95,9 +121,70 @@ public class JavaTasks {
      * 24.7
      * 99.5
      * 121.3
+     * R = O(Nlog2N)
+     * T = O(n)
      */
     static public void sortTemperatures(String inputName, String outputName) {
-        throw new NotImplementedError();
+        List<String>list = new ArrayList<String>();
+        try {
+            Scanner scanner = new Scanner(new File(inputName));
+            while(scanner.hasNext()){
+                String line = scanner.nextLine();
+                if (Double.parseDouble(line) >= -2730 && Double.parseDouble(line) <= 5000)
+                list.add(line);
+                else throw new IllegalArgumentException("IllegalArgument");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        double[] a = new double[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            a[i] =Double.parseDouble(list.get(i));
+        }
+        quickSort(a);
+        try {
+            FileWriter output = new FileWriter(new File(outputName));
+            for (int i = 0; i < list.size(); i++) {
+                output.write(a[i] + "\n");
+            }
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static final Random random = new Random(Calendar.getInstance().getTimeInMillis());
+
+    private static int partition(double[] elements, int min, int max) {
+        double x = elements[min + random.nextInt(max - min + 1)];
+        int left = min, right = max;
+        while (left <= right) {
+            while (elements[left] < x) {
+                left++;
+            }
+            while (elements[right] > x) {
+                right--;
+            }
+            if (left <= right) {
+                double temp = elements[left];
+                elements[left] = elements[right];
+                elements[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        return right;
+    }
+
+    private static void quickSort(double[] elements, int min, int max) {
+        if (min < max) {
+            int border = partition(elements, min, max);
+            quickSort(elements, min, border);
+            quickSort(elements, border + 1, max);
+        }
+    }
+
+    private static void quickSort(double[] elements) {
+        quickSort(elements, 0, elements.length - 1);
     }
 
     /**
@@ -128,9 +215,48 @@ public class JavaTasks {
      * 2
      * 2
      * 2
+     * R = O(Nlog2N)
+     * T = O(n + m), где n = list.size, m - наибольшее количество повторений одного числа
      */
     static public void sortSequence(String inputName, String outputName) {
-        throw new NotImplementedError();
+        List<Integer> list = new ArrayList<Integer>();
+        Map<Integer, Integer> map = new HashMap<Integer,Integer>();
+        try {
+            Scanner scanner = new Scanner(new File(inputName));
+            while(scanner.hasNextInt()){
+                list.add(scanner.nextInt());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        int maxReiter = 1;
+        int element = 0;
+        for (int i = 0; i < list.size(); i++) {
+            Integer number = 1;
+            if (map.containsKey(list.get(i))){
+                number = map.get(list.get(i)) + 1;
+            }
+            if (number > maxReiter || number == maxReiter && list.get(i) < element){
+                maxReiter = number;
+                element =  list.get(i);
+            }
+            map.put(list.get(i),number);
+        }
+        try{
+           FileWriter output = new FileWriter(new File(outputName));
+            for (int i = 0; i < list.size(); i++) {
+                if(list.get(i) != element){
+                    output.write(list.get(i) + "\n");
+                }
+            }
+            for (int i = 0; i < maxReiter; i++) {
+                output.write(element + "\n");
+            }
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -150,4 +276,5 @@ public class JavaTasks {
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
         throw new NotImplementedError();
     }
+
 }

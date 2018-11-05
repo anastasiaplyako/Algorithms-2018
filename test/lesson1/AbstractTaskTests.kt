@@ -2,8 +2,11 @@ package lesson1
 
 import java.io.BufferedWriter
 import java.io.File
+import java.io.FileNotFoundException
 import java.util.*
 import kotlin.math.abs
+import kotlin.test.assertEquals
+import kotlin.test.fail
 
 abstract class AbstractTaskTests : AbstractFileTests() {
 
@@ -36,6 +39,12 @@ abstract class AbstractTaskTests : AbstractFileTests() {
         try {
             sortTimes("input/time_in3.txt", "temp.txt")
             assertFileContent("temp.txt", File("input/time_out3.txt").readLines().joinToString(separator = "\n"))
+        } finally {
+            File("temp.txt").delete()
+        }
+        try{
+            sortTimes("input/time_in4.txt","temp.txt")
+            assertFileContent("temp.txt", File("input/time_out4.txt").readLines().joinToString(separator = "\n"))
         } finally {
             File("temp.txt").delete()
         }
@@ -98,6 +107,11 @@ abstract class AbstractTaskTests : AbstractFileTests() {
         } finally {
             File("temp.txt").delete()
         }
+        try {
+            sortTemperatures("input/temp_in2.txt", "temp.txt")
+        }
+        catch (e: IllegalArgumentException){
+        }
 
         fun testGeneratedTemperatures(size: Int) {
             try {
@@ -150,6 +164,7 @@ abstract class AbstractTaskTests : AbstractFileTests() {
         } finally {
             File("temp.txt").delete()
         }
+
 
         fun BufferedWriter.writeNumbers(numbers: List<Int>) {
             for (n in numbers) {
