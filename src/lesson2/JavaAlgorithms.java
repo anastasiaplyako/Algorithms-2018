@@ -35,18 +35,24 @@ public class JavaAlgorithms {
      * Например, для приведённого выше файла результат должен быть Pair(3, 4)
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
+     *Программа реализована на основе алгоритма, предлагаемого в книге Томаса Кормена
      *
-     *
-     * Реализован алгоритм данной задачи, но тесты не проходят
+     *R = O(n*logn)
+     *T = O(n)
      */
-    static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName){  throw new NotImplementedError(); }
-    /**
+    //static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName){  throw new NotImplementedError(); }
+
+
     static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName) {
         List<Integer> list = new ArrayList<Integer>();
         try {
             Scanner scanner = new Scanner(new File(inputName));
             while (scanner.hasNextInt()) {
-                list.add(scanner.nextInt());
+                int number = scanner.nextInt();
+                if (number > 0){
+                    list.add(number);
+                }
+                else throw new IllegalArgumentException();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -58,12 +64,13 @@ public class JavaAlgorithms {
         int[] res = buy(aNew, 0, aNew.length - 1);
         return new Pair(res[0] + 1, res[1] + 2);
     }
+
     static private int[] buy(int a[], int low, int high) {
         int[] res = new int[3];
         /*
          res[0] - левый индекс
          res[1] - правый индекс
-
+         */
         if (low == high) {
             res[0] = low;
             res[1] = high;
@@ -94,8 +101,8 @@ public class JavaAlgorithms {
         int[0] - индекс слева
         int[1] - индекс справа
         int[2] - сумма
-
-        for (int i = mid; i > low; i--) {
+        */
+        for (int i = mid; i >= low; i--) {
             sum += a[i];
             if (sum > maxSumLeft) {
                 maxSumLeft = sum;
@@ -105,19 +112,19 @@ public class JavaAlgorithms {
         }
         sum = 0;
         int maxSumRight = -2147483648;
-        for (int i = mid + 1; i < hight; i++) {
+        for (int i = mid + 1; i <= hight; i++) {
             sum += a[i];
             if (sum > maxSumRight) {
                 maxSumRight = sum;
                 res[1] = i;
             }
         }
-        //if (maxSumLeft == -2147483648) maxSumLeft = 0;
-        //if (maxSumRight == -2147483648) maxSumRight = 0;
+        if (maxSumLeft == -2147483648) maxSumLeft = 0;
+        if (maxSumRight == -2147483648) maxSumRight = 0;
         res[2] = maxSumLeft + maxSumRight;
         return res;
     }
-    */
+
 
 
     /**
