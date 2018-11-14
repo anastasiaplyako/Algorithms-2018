@@ -95,7 +95,7 @@ class BinaryTreeTest {
             val list = mutableListOf<Int>()
             for (i in 1..20) {
                 list.add(random.nextInt(100))
-            }
+           }
             val treeSet = TreeSet<Int>()
             val binarySet = create()
             for (element in list) {
