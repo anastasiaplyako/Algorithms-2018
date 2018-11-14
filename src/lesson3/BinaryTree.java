@@ -63,6 +63,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Удаление элемента в дереве
      *  Ресурсоемкость - O(h)
      *  Трудоемкость - O(h)
+     *  Задача решена на основе алгоритма https://neerc.ifmo.ru/wiki/index.php?title=Дерево_поиска,_наивная_реализация
      * Средняя
      */
     @Override
@@ -293,6 +294,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      *  Ресурсоемкость - O(h)
      *  Трудоемкость - O(h)
      * Сложная
+     *
      */
     @NotNull
     @Override
