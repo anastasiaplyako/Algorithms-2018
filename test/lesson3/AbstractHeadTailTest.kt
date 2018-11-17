@@ -21,7 +21,6 @@ abstract class AbstractHeadTailTest {
         tree.add(6)
     }
 
-
     protected fun doHeadSetTest() {
         var set: SortedSet<Int> = tree.headSet(5)
         assertEquals(true, set.contains(1))
@@ -34,12 +33,40 @@ abstract class AbstractHeadTailTest {
         assertEquals(false, set.contains(8))
         assertEquals(false, set.contains(9))
         assertEquals(false, set.contains(10))
-
-
-        set = tree.headSet(127)
+        set = tree.headSet(12)
         for (i in 1..10)
             assertEquals(true, set.contains(i))
 
+
+        var set1: SortedSet<Int> = tree.headSet(3)
+        assertEquals(true, set1.contains(1))
+        assertEquals(true, set1.contains(2))
+        assertEquals(false, set1.contains(3))
+        assertEquals(false, set1.contains(4))
+        assertEquals(false, set1.contains(5))
+        assertEquals(false, set1.contains(6))
+        assertEquals(false, set1.contains(7))
+        assertEquals(false, set1.contains(8))
+        assertEquals(false, set1.contains(9))
+        assertEquals(false, set1.contains(10))
+        set1 = tree.headSet(12)
+        for (i in 1..10)
+            assertEquals(true, set1.contains(i))
+
+        var set2: SortedSet<Int> = tree.headSet(11)
+        assertEquals(true, set1.contains(1))
+        assertEquals(true, set1.contains(2))
+        assertEquals(true, set1.contains(3))
+        assertEquals(true, set1.contains(4))
+        assertEquals(true, set1.contains(5))
+        assertEquals(true, set1.contains(6))
+        assertEquals(true, set1.contains(7))
+        assertEquals(true, set1.contains(8))
+        assertEquals(true, set1.contains(9))
+        assertEquals(true, set1.contains(10))
+        set2 = tree.headSet(12)
+        for (i in 1..10)
+            assertEquals(true, set2.contains(i))
     }
 
     protected fun doTailSetTest() {
@@ -59,6 +86,35 @@ abstract class AbstractHeadTailTest {
         for (i in 1..10)
             assertEquals(true, set.contains(i))
 
+        var set1: SortedSet<Int> = tree.tailSet(9)
+        assertEquals(false, set1.contains(1))
+        assertEquals(false, set1.contains(2))
+        assertEquals(false, set1.contains(3))
+        assertEquals(false, set1.contains(4))
+        assertEquals(false, set1.contains(5))
+        assertEquals(false, set1.contains(6))
+        assertEquals(false, set1.contains(7))
+        assertEquals(false, set1.contains(8))
+        assertEquals(true, set1.contains(9))
+        assertEquals(true, set1.contains(10))
+        set1 = tree.tailSet(-128)
+        for (i in 1..10)
+            assertEquals(true, set1.contains(i))
+
+        var set2: SortedSet<Int> = tree.tailSet(11)
+        assertEquals(false, set2.contains(1))
+        assertEquals(false, set2.contains(2))
+        assertEquals(false, set2.contains(3))
+        assertEquals(false, set2.contains(4))
+        assertEquals(false, set2.contains(5))
+        assertEquals(false, set2.contains(6))
+        assertEquals(false, set2.contains(7))
+        assertEquals(false, set2.contains(8))
+        assertEquals(false, set2.contains(9))
+        assertEquals(false, set2.contains(10))
+        set2 = tree.tailSet(-128)
+        for (i in 1..10)
+            assertEquals(true, set2.contains(i))
     }
 
     protected fun doHeadSetRelationTest() {
