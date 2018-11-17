@@ -154,15 +154,13 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
             Node<T> node = current ;
             if (current != null) {
                 node = current;
-            } else return find(first());
-            Node<T> CurRight = current.right;
-            Node<T> res = null;
-            if (node.value == last()) return null;
-            if (CurRight != null) {
-                while (CurRight.left != null) {
-                    CurRight = CurRight.left;
+            } else return minimum();
+            Node<T> res = current.right;
+            if (res != null) {
+                while (res.left != null) {
+                    res = res.left;
                 }
-                return CurRight;
+                return res;
             } else {
                 Node<T> parent = null;
                 if (root != null) {
@@ -172,6 +170,15 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
                 res = findParent(parent, node);
             }
             return res;
+        }
+
+        private Node<T> minimum() {
+            if (root == null) throw new NoSuchElementException();
+            Node<T> current = root;
+            while (current.left != null) {
+                current = current.left;
+            }
+            return current;
         }
 
         private Node<T> findParent(Node<T> parent, Node<T> node) {
@@ -248,13 +255,11 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         while (iterator.hasNext()) {
             T value = iterator.next();
             if (iterator.next().compareTo(toElement) < 0 && value.compareTo(fromElement) > 0) {
-                set.add(value);
+                res.add(value);
             }
         }
         return res;
     }
-
-    SortedSet<T> set = new TreeSet<>();
 
     /**
      * Найти множество всех элементов меньше заданного
@@ -262,21 +267,6 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      *  Ресурсоемкость - O(h)
      *  Трудоемкость - O(h)
      */
-    private void addSort(Node<T> node) {
-        set.add(node.value);
-        if (node.left != null) addSort(node.left);
-        if (node.right != null) addSort(node.right);
-    }
-
-    private void head(T toElement, Node<T> node) {
-        int contains = node.value.compareTo(toElement);
-        if (contains > 0 && node.left != null && node.left.value != toElement) {
-            head(toElement, node.left);
-        } else if (contains < 0) {
-            set.add(node.value);
-            if (node.right != null) head(toElement, node.right);
-        }
-    }
 
     @NotNull
     @Override
@@ -302,14 +292,15 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
     @NotNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
+        SortedSet setList = new TreeSet();
         BinaryTreeIterator iterator = new BinaryTreeIterator();
         while (iterator.hasNext()) {
             T value = iterator.next();
             if (value.compareTo(fromElement) > 0 || value.compareTo(fromElement) == 0) {
-                set.add(value);
+                setList.add(value);
             }
         }
-        return set;
+        return setList;
     }
 
     @Override
