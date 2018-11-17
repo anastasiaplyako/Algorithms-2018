@@ -81,7 +81,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
             node.left = deleted(node.left, t);
         } else if (compare > 0) {
             node.right = deleted(node.right, t);
-        } else if (node.right != null && node.left != null) {
+        } else if (node.right != null) {
             node.value = firstNode(node.right).value;
             node.right = deleted(node.right, node.value);
         } else {
@@ -140,7 +140,6 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
     public class BinaryTreeIterator implements Iterator<T> {
 
         private Node<T> current = null;
-        private LinkedList<Node<T>> listForIteration;
 
         private BinaryTreeIterator() {
         }
@@ -152,7 +151,7 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          *  Трудоемкость - O(h)
          */
         private Node<T> findNext() {
-            Node<T> node;
+            Node<T> node = current ;
             if (current != null) {
                 node = current;
             } else return find(first());
@@ -206,12 +205,16 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          *  Ресурсоемкость - O(h)
          *  Трудоемкость - O(h)
          * Сложная
+         * рекурсия - делаем через root (или можно иначе?)
+         * без рекурсии - треуется родитель. Определять в отдельном методе?
+         * добавить границы в binary tree, входит ли в границу
          */
         @Override
         public void remove() {
      BinaryTree.this.remove(current.value);
         }
     }
+
 
     @NotNull
     @Override
