@@ -147,8 +147,11 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         /**
          * Поиск следующего элемента
          * Средняя
+         * h - высота дерева
          * Ресурсоемкость - O(h)
          * Трудоемкость - O(h)
+         * пояснение трудоемкости
+         * в методе minimum трудоемкость равна O(h), также в методе findParents трудоемкость равна O(h)
          */
         private Node<T> findNext() {
             Node<T> node = current;
@@ -212,9 +215,6 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          * Ресурсоемкость - O(h)
          * Трудоемкость - O(h)
          * Сложная
-         * рекурсия - делаем через root (или можно иначе?)
-         * без рекурсии - треуется родитель. Определять в отдельном методе?
-         * добавить границы в binary tree, входит ли в границу
          */
         @Override
         public void remove() {
